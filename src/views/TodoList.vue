@@ -1,28 +1,43 @@
 <template>
-  <div class="todo flex flex-col">
-    <div class="mb-5 flex content-center">
-      <div class="w-full sm:w-1/2 px-3 mb-3 sm:mb-0">
-        <input
-          class="block py-4 px-3 w-full text-sm text-black-70 placeholder-black-50 font-medium outline-none bg-transparent border border-gray-400 hover:border-white focus:border-green-500 rounded-lg"
-          id="formInput1-1"
-          type="text"
-          placeholder="Entry your task"
-        />
-      </div>
-      <button
-        class="ml-4 color-green-600 font-weight-600 text-3xl button-add w-5 h-5 p-1 rounded-2xl box-border"
-      ></button>
-    </div>
+  <div class="todo flex flex-col" id="todo">
+    <h1 class="mt-0 font-bold text-4xl mb-5">Welcome to my Todo-list</h1>
+    <button
+      class="emoji-color-green transition ease-in-out delay-150 btn inline-flex items-center justify-center w-10 h-10 box-border border border-solid border-green-500 rounded-lg hover:border-blue-400"
+    >
+      <span class="emoji-color-green transition ease-in-out delay-150">➕</span>
+    </button>
+    <div class="container-task"></div>
   </div>
 </template>
 
 <script>
+// import Icon from 'vue-awesome/components/Icon';
 export default {
-  data: () => {
+  components: {
+    // 'v-icon': Icon,
+  },
+  data() {
     return {
       viewForm: false,
+      title: '',
     };
   },
-  methods: {},
+  methods: {
+    changeTitle() {},
+  },
 };
 </script>
+
+<style lang="scss">
+.emoji-color-green {
+  span {
+    color: transparent;
+    text-shadow: 0 0 0 rgb(7, 177, 7);
+  }
+  &:hover {
+    span {
+      text-shadow: 0 0 0 rgb(96 165 250);
+    }
+  }
+}
+</style>

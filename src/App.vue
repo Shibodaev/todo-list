@@ -39,13 +39,13 @@ export default {
       titlePage: null,
       addenda: {
         todo: {
-          title: "Todo List",
-          url: "/todolist",
+          title: 'Todo List',
+          url: '/todolist',
           logo: `📙`,
         },
         calculator: {
-          title: "Calculator",
-          url: "/calculator",
+          title: 'Calculator',
+          url: '/calculator',
           logo: `💻`,
         },
       },
@@ -55,7 +55,7 @@ export default {
     $route: {
       immediate: true,
       handler(to) {
-        this.titlePage = to.meta.title || "Some Default Title";
+        this.titlePage = to.meta.title || 'Some Default Title';
       },
     },
   },
