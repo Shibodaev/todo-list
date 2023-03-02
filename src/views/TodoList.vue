@@ -8,20 +8,8 @@
       <span class="emoji-color-green transition ease-in-out delay-150">➕</span>
     </button>
     <br />
-    <input
-      type="text"
-      @change="createTask"
-      :class="{ hidden: isBlock }"
-      :value="inputValue"
-      :title="title"
-      class="border border-solid border-black-50 p-2"
-    />
-    <div class="container-task">
-      <todo-card
-        :card-title="title"
-        :content="inputValue"
-        :class="[inputValue.length > 0 ? 'block' : 'hidden']"
-      ></todo-card>
+    <div :class="{ hidden: isBlock }" class="container-task">
+      <todo-card :title="title" :content="inputValue"> </todo-card>
     </div>
   </div>
 </template>

@@ -7,5 +7,13 @@ import '@/scss/style.scss';
 import './assets/tailwind.css';
 
 // Module
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faPen, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+library.add(faPen, faPenToSquare);
 
-createApp(App).use(store).use(router).mount('#app');
+createApp(App)
+  .component('font-awesome-icon', FontAwesomeIcon)
+  .use(store)
+  .use(router)
+  .mount('#app');
