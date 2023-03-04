@@ -5,7 +5,9 @@
       v-on:click="isBlock = !isBlock"
       class="emoji-color-green transition ease-in-out delay-150 btn inline-flex items-center justify-center w-10 h-10 box-border border border-solid border-green-500 rounded-lg hover:border-blue-400"
     >
-      <span class="emoji-color-green transition ease-in-out delay-150">➕</span>
+      <span class="emoji-color-green transition ease-in-out delay-150"
+        ><font-awesome-icon :icon="['fa-solid', 'fa-plus']"
+      /></span>
     </button>
     <br />
     <div :class="{ hidden: isBlock }" class="container-task">
@@ -15,12 +17,10 @@
 </template>
 
 <script>
-// import Icon from 'vue-awesome/components/Icon';
 import TodoCard from '@/components/Todo/TodoCard.vue';
 export default {
   components: {
     TodoCard,
-    // 'v-icon': Icon,
   },
   data() {
     return {
@@ -38,16 +38,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.emoji-color-green {
-  span {
-    color: transparent;
-    text-shadow: 0 0 0 rgb(7, 177, 7);
-  }
-  &:hover {
-    span {
-      text-shadow: 0 0 0 rgb(96 165 250);
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
