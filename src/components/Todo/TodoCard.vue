@@ -16,13 +16,15 @@
     <div class="card-task__body p-4 flex flex-col">
       <div class="card-task__container">
         <template v-if="tasks">
-          <task-input-vue
-            v-for="(item, index) in tasks"
-            :key="index"
-            :id="index"
-            :item="item.task"
-            @click="deleteElement($event, item.id)"
-          ></task-input-vue>
+          <KeepAlive>
+            <task-input-vue
+              v-for="(item, index) in tasks"
+              :key="index"
+              :id="index"
+              :item="item.task"
+              @click="deleteElement($event, item.id)"
+            ></task-input-vue>
+          </KeepAlive>
         </template>
       </div>
       <button

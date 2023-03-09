@@ -15,15 +15,17 @@
       </div>
     </header>
     <div class="container mx-auto">
-      <main class="application">
-        <aside class="application__sidebar">
+      <main class="application min-h-screen">
+        <aside class="application__sidebar pr-4">
           <template v-for="elem in addenda" :key="elem">
-            <router-link class="text-blue-700 w-full block" :to="elem.url">{{
-              elem.title
-            }}</router-link>
+            <router-link
+              class="text-blue-700 w-full rounded-full mt-2 border flex items-center justify-center hover:bg-slate-400 hover:text-white duration-100 ease-in-out"
+              :to="elem.url"
+              >{{ elem.title }}</router-link
+            >
           </template>
         </aside>
-        <section class="application__main">
+        <section class="application__main border-r">
           <router-view />
         </section>
       </main>

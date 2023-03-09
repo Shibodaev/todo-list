@@ -1,13 +1,23 @@
 <template>
-  <div>
-    <label class="custom-checkbox">
+  <div
+    class="flex items-center"
+    :data-parent="id"
+    :class="id > 0 ? 'mt-2' : ''"
+  >
+    <label class="flex items-centerc w-full custom-checkbox mr-2">
       <input type="checkbox" name="color-1" value="indigo" />
-      <span>Indigo</span>
+      <span>{{ id + 1 }}. {{ item }}</span>
     </label>
-    <input
-      class="w-full p-2 box-border text-xs border-b bg-transparent border-gray-600"
-      type="text"
-    />
+    <span
+      data-delete
+      @click="$emit('deleteElement', $event)"
+      class="ml-4 hover:text-green-400 active:text-green-600"
+    >
+      <font-awesome-icon
+        class="pointer-events-none"
+        :icon="['fa-solid', 'fa-xmark']"
+      />
+    </span>
   </div>
 </template>
 
@@ -15,6 +25,17 @@
 export default {
   data() {
     return {};
+  },
+  methods: {},
+  props: {
+    item: {
+      type: String,
+      default: '',
+    },
+    id: {
+      type: Number,
+      default: 0,
+    },
   },
 };
 </script>
