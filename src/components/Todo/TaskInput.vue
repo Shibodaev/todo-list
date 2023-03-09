@@ -5,8 +5,15 @@
     :class="id > 0 ? 'mt-2' : ''"
   >
     <label class="flex items-centerc w-full custom-checkbox mr-2">
-      <input type="checkbox" name="color-1" value="indigo" />
-      <span>{{ id + 1 }}. {{ item }}</span>
+      <input
+        type="checkbox"
+        name="checkbox"
+        value="indigo"
+        v-model="light"
+        :true-value="on"
+        :false-value="off"
+      />
+      <span :class="{ checked: light }">{{ id + 1 }}. {{ item }}</span>
     </label>
     <span
       data-delete
@@ -24,7 +31,7 @@
 <script>
 export default {
   data() {
-    return {};
+    return { on: true, off: false, light: false };
   },
   methods: {},
   props: {
@@ -41,6 +48,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.checked {
+  text-decoration: line-through;
+}
 .checkbox {
   margin-bottom: 0.2em;
 }
