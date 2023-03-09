@@ -63,10 +63,10 @@ export default {
     handlerInput(event) {
       this.inputValue = event.target.value;
     },
-    deleteElement() {
-      // if (!e.target.attributes['data-delete']) return;
-      // this.tasks.splice(e.currentTarget.getAttribute('data-parent'), 1);
-      // return this.tasks;
+    deleteElement(e) {
+      if (!e.target.attributes['data-delete']) return;
+      this.tasks.splice(e.currentTarget.getAttribute('data-parent'), 1);
+      return this.tasks;
     },
   },
 };
