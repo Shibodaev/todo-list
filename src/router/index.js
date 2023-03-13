@@ -22,11 +22,15 @@ const routes = [
     path: '/calculator',
     name: 'calculator',
     meta: { title: 'Calculator' },
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/MyCalculator.vue'),
+  },
+  {
+    path: '/converter',
+    name: 'converter',
+    meta: { title: 'Converter' },
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/MyConverter.vue'),
   },
 ];
 

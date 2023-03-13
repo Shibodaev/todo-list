@@ -2,6 +2,8 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 // Style
 import '@/scss/style.scss';
 import './assets/tailwind.css';
@@ -14,11 +16,23 @@ import {
   faPenToSquare,
   faPlus,
   faXmark,
+  faSliders,
+  faArrowUp,
+  faArrowDown,
 } from '@fortawesome/free-solid-svg-icons';
-library.add(faXmark, faPlus, faPen, faPenToSquare);
+library.add(
+  faArrowUp,
+  faArrowDown,
+  faSliders,
+  faXmark,
+  faPlus,
+  faPen,
+  faPenToSquare
+);
 
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
   .use(store)
   .use(router)
+  .use(VueAxios, axios)
   .mount('#app');
