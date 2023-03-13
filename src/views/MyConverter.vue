@@ -8,10 +8,13 @@
     </h2> -->
 
     <input class="border rounded-sm" type="text" v-model="search" />
+    <!-- <pre>
+     {{ valuteData.Valute }}
+    </pre> -->
 
     <div class="mt-2 flex overflow-auto py-6 aic">
       <div
-        v-for="(item, index, i) in search.length ? search : valuteData.Valute"
+        v-for="(item, index, i) in valuteData.Valute"
         :key="item.ID"
         :class="i >= 1 ? 'ml-2' : ''"
         class="card shadow-xl rounded-lg border-2 min-w-16 h-36"
@@ -61,18 +64,20 @@ export default {
       search: '',
     };
   },
-  computed: {
-    searchValute() {
-      return this.valuteData.Valute.filter((item) => {
-        console.log(item.Valute.indexOf(this.search));
-        item.Name.indexOf(this.search) !== -1;
-      });
-    },
-  },
-  filters: {},
+  // computed: {
+  //   searchValute() {
+  //     return this.valuteData.filter(function (item) {
+  //       item.Valute.Name.indexOf(this.search) !== -1;
+  //     });
+  //   },
+  // },
   created() {
     axios
-      .get('https://www.cbr-xml-daily.ru/daily_json.js')
+      .get('http://www.cbr-xml-daily.ru/daily_json.js', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         this.valuteData = response.data;
       })
