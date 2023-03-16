@@ -15,7 +15,7 @@
           <div class="grid grid-cols-2 max-w-sm mt-5 gap-3">
             <div v-for="el in select" :key="el">
               <select class="border p-2 rounded-md w-full" data-te-select-init>
-                <option v-for="el in valuteData" :key="el.ID" :value="el.ID">
+                <option v-for="el in Valute" :key="el.ID" :value="el.ID">
                   {{ el.CharCode }}
                 </option>
               </select>
@@ -43,29 +43,28 @@
       <div
         class="flex-col max-w-xs flex overflow-auto pb-6 aic ml-auto mr-10 max-h-96"
       >
+        {{ valute }}
         <div
-          v-for="(item, index, i) in searchValue.length > 0
-            ? searchValute
-            : valuteData"
+          v-for="(item, index, i) in valute"
           :key="item.ID"
           :class="i >= 1 ? 'mt-2' : ''"
           class="card rounded-lg border-2 min-w-16 min-h-9"
         >
           <div class="card__name px-4 py-2 mt-2 relative max-h-12">
             <div class="flex h-12">
-              <img
+              <!-- <img
                 class="mr-4 w-16 h-8 border"
                 :src="`https://flagcdn.com/${item.CharCode.substring(
                   0,
                   item.CharCode.length - 1
                 ).toLowerCase()}.svg`"
                 alt=""
-              />
+              /> -->
               <span class="text-black leading-tight text-xs -mt-1">
                 {{ item.Name }}</span
               >
             </div>
-            <div class="w-full">{{ index }}</div>
+            <!-- <div class="w-full">{{ index }}</div> -->
 
             <div class="mt-2">
               Текущий курс: {{ item.Value }}
@@ -92,36 +91,25 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { store } from 'vuex';
+import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
-      valuteData: [],
       flags: '',
+      store,
       searchValue: '',
       select: 2,
-      errorMessage: '',
-      st: this.$store,
     };
   },
-  created() {
-    axios
-      .get('http://www.cbr-xml-daily.ru/daily_json.js', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        console.log(response.data.Valute);
-        this.valuteData = response.data.Valute;
-      })
-      .catch((error) => {
-        this.errorMessage = error.message;
-        console.error('There was an error!', error);
-      });
+  mounted() {
+    this.$store.dispatch('getValute');
   },
   computed: {
+    ...mapState(['valute']),
+    ...mapGetters(['val']),
     // searchValute() {
     //   return Object.values(this.valuteData.Valute).filter((item) => {
     //     // if (item === null) return;

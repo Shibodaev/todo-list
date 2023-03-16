@@ -1,11 +1,7 @@
 import { createStore } from 'vuex';
-
+import Valute from './modules/valute.js';
 export default createStore({
-  state: {
-    count: 0,
+  modules: {
+    Valute,
   },
-  getters: {},
-  mutations: {},
-  actions: {},
-  modules: {},
 });
