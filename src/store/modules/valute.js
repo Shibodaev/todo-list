@@ -1,31 +1,33 @@
 import axios from 'axios';
+
 export default {
   state: {
     valute: [],
   },
   actions: {
-    getValute({ commit }) {
+    getAllValute({ commit }) {
       axios
         .get('http://www.cbr-xml-daily.ru/daily_json.js', {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/data',
           },
         })
         .then((response) => response.data.Valute)
-        .then((valute) => {
-          commit('SetItem', valute);
+        .then((items) => {
+          commit('Set_state', items);
         });
     },
   },
   mutations: {
-    SetItem(state, valute) {
-      console.log(valute);
-      return (state.valute = valute);
+    Set_state(state, items) {
+      console.log(items);
+      console.log(state.valute);
+      state.valute = items;
     },
   },
   getters: {
-    val(state) {
-      state.valute;
+    getVal(state) {
+      return state.valute;
     },
   },
 };

@@ -1,7 +1,7 @@
 import { createStore } from 'vuex';
-import Valute from './modules/valute.js';
+import valute from './modules/valute.js';
 export default createStore({
   modules: {
-    Valute,
+    valute,
   },
 });
