@@ -18,22 +18,37 @@
               v-for="item in 2"
               :key="item"
               :elements="valute.valute.Valute"
+              @change="selectValue($event)"
             ></select-code>
           </div>
-          <div>
+          <!-- <div class="flex flex-col mt-4">
+            <div class="mb-1">{{ defaultString }}</div>
             <input
               @keydown="
                 if (['+', '-', 'e'].includes($event.key))
                   $event.preventDefault();
               "
               pattern="^[ 0-9]+$"
-              class="border rounded-sm h-10 mt-5 p-2"
+              class="border rounded-sm h-10 p-2"
               type="number"
               min="1"
-              name=""
-              id=""
+              v-model="defaultValue"
             />
           </div>
+          <div class="flex flex-col mt-4">
+            <div class="mb-1">{{ defaultString }}</div>
+            <input
+              @keydown="
+                if (['+', '-', 'e'].includes($event.key))
+                  $event.preventDefault();
+              "
+              pattern="^[ 0-9]+$"
+              class="border rounded-sm h-10 p-2"
+              type="number"
+              min="1"
+              v-model="currentValute"
+            />
+          </div> -->
         </div>
       </div>
       <pre>
@@ -42,47 +57,12 @@
       <div
         class="flex-col max-w-xs flex overflow-auto pb-6 aic ml-auto mr-10 max-h-96"
       >
-        <div
+        <converter-card
           v-for="(item, index, i) in valute.valute.Valute"
           :key="item.ID"
           :class="i >= 1 ? 'mt-2' : ''"
-          class="card rounded-lg border-2 min-w-16 min-h-9"
-        >
-          <div class="card__name px-4 py-2 mt-2 relative max-h-12">
-            <div class="flex h-12">
-              <img
-                class="mr-4 w-16 h-8 border"
-                :src="`https://flagcdn.com/${
-                  item.CharCode != 'XDR'
-                    ? item.CharCode.substr(
-                        0,
-                        item.CharCode.length - 1
-                      ).toLowerCase() + '.svg'
-                    : ''
-                }`"
-                alt=""
-              />
-              <span class="text-black leading-tight text-xs -mt-1">
-                {{ item.Name }}</span
-              >
-            </div>
-            <!-- <div class="w-full">{{ index }}</div> -->
-
-            <div class="mt-2">
-              Текущий курс: {{ item.Value }}
-              <font-awesome-icon
-                :class="`ml-2 ${
-                  item.Value > item.Previous
-                    ? ' text-red-300'
-                    : ' text-green-300'
-                }`"
-                :icon="` fa-arrow-up fa-arrow${
-                  item.Value > item.Previous ? '-down' : '-up'
-                }`"
-              />
-            </div>
-          </div>
-        </div>
+          :item="item"
+        ></converter-card>
       </div>
     </div>
   </div>
@@ -91,16 +71,20 @@
 <script>
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
-import SelectCode from '@/components/select/SelectCode.vue';
+import SelectCode from '@/components/select/SelectCode';
+import ConverterCard from '@/components/ConverterCard/ConverterCard';
 export default {
   data() {
     return {
+      defaultValue: 1,
+      defaultString: 'Rub - Российский рубль',
       flags: '',
       searchValue: '',
     };
   },
   components: {
     SelectCode,
+    ConverterCard,
   },
   created() {
     this.$store.dispatch('getAllValute');
@@ -119,6 +103,9 @@ export default {
     // },
   },
   methods: {
+    selectValue(e) {
+      console.log(e.target);
+    },
     shortTitle(title) {
       if (typeof title != 'string') return;
       return title.substr(0, 10);

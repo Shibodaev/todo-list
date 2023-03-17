@@ -1,8 +1,13 @@
 <template>
   <div>
-    <select class="border p-2 rounded-md w-full" data-te-select-init>
-      <option v-for="el in elements" :key="el.ID" :value="el.ID">
+    <select
+      @change="$emit('selectValue', $event)"
+      class="border p-2 rounded-md w-full"
+      data-te-select-init
+    >
+      <option v-for="(el, index, i) in elements" :key="el.ID" :value="el.ID">
         {{ el.CharCode }}
+        {{ i + 1 }}
       </option>
     </select>
   </div>
@@ -16,7 +21,9 @@ export default {
   props: {
     elements: {
       type: Object,
-      default: () => ({}),
+      default: () => ({
+        CharCode: String,
+      }),
     },
   },
 };
