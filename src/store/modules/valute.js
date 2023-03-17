@@ -12,16 +12,17 @@ export default {
             'Content-Type': 'application/data',
           },
         })
-        .then((response) => response.data.Valute)
+        .then((response) => response.data)
         .then((items) => {
           commit('Set_state', items);
+        })
+        .catch((error) => {
+          error.response.data;
         });
     },
   },
   mutations: {
     Set_state(state, items) {
-      console.log(items);
-      console.log(state.valute);
       state.valute = items;
     },
   },

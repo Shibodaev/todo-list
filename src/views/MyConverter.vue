@@ -1,25 +1,24 @@
 <template>
   <div class="overflow-hidden">
     <div class="flex w-full">
-      <div class="fle fle-column">
+      <div>
         <div class="flex-inline flex-col">
-          <!-- <h2 class="text-xl font-bold">
-            Курсы валют ЦБ РФ на: {{ valuteData.Date.substr(0, 10) }}
+          <h2 class="text-xl font-bold">
+            Курсы валют ЦБ РФ на:
+            {{ shortTitle(valute.valute.Date) }}
           </h2>
           <h2 class="text-sm font-medium">
             Последнее обновление базы данных:
-            {{ valuteData.Timestamp.substr(0, 10) }}
-          </h2> -->
+            {{ shortTitle(valute.valute.Timestamp) }}
+          </h2>
         </div>
         <div>
           <div class="grid grid-cols-2 max-w-sm mt-5 gap-3">
-            <div v-for="el in select" :key="el">
-              <select class="border p-2 rounded-md w-full" data-te-select-init>
-                <option v-for="el in valute.valute" :key="el.ID" :value="el.ID">
-                  {{ el.CharCode }}
-                </option>
-              </select>
-            </div>
+            <select-code
+              v-for="item in 2"
+              :key="item"
+              :elements="valute.valute.Valute"
+            ></select-code>
           </div>
           <div>
             <input
@@ -37,11 +36,14 @@
           </div>
         </div>
       </div>
+      <pre>
+        <!-- {{ valute.valute.Valute }} -->
+      </pre>
       <div
         class="flex-col max-w-xs flex overflow-auto pb-6 aic ml-auto mr-10 max-h-96"
       >
         <div
-          v-for="(item, index, i) in valute.valute"
+          v-for="(item, index, i) in valute.valute.Valute"
           :key="item.ID"
           :class="i >= 1 ? 'mt-2' : ''"
           class="card rounded-lg border-2 min-w-16 min-h-9"
@@ -50,10 +52,14 @@
             <div class="flex h-12">
               <img
                 class="mr-4 w-16 h-8 border"
-                :src="`https://flagcdn.com/${item.CharCode.substring(
-                  0,
-                  item.CharCode.length - 1
-                ).toLowerCase()}.svg`"
+                :src="`https://flagcdn.com/${
+                  item.CharCode != 'XDR'
+                    ? item.CharCode.substr(
+                        0,
+                        item.CharCode.length - 1
+                      ).toLowerCase() + '.svg'
+                    : ''
+                }`"
                 alt=""
               />
               <span class="text-black leading-tight text-xs -mt-1">
@@ -79,27 +85,22 @@
         </div>
       </div>
     </div>
-    <!-- <input class="border rounded-sm" type="text" v-model="searchValue" /> -->
-    <!-- <pre>
-     {{ valuteData.Valute }}
-    </pre> -->
-    <pre>
-      {{ valute }}
-    </pre>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
-
+import SelectCode from '@/components/select/SelectCode.vue';
 export default {
   data() {
     return {
       flags: '',
       searchValue: '',
-      select: 2,
     };
+  },
+  components: {
+    SelectCode,
   },
   created() {
     this.$store.dispatch('getAllValute');
@@ -107,6 +108,7 @@ export default {
   computed: {
     ...mapState(['valute']),
     ...mapGetters(['getVal']),
+
     // searchValute() {
     //   return Object.values(this.valuteData.Valute).filter((item) => {
     //     // if (item === null) return;
@@ -115,6 +117,12 @@ export default {
     //     Object.values(item)[2].indexOf(this.searchValue) !== -1;
     //   });
     // },
+  },
+  methods: {
+    shortTitle(title) {
+      if (typeof title != 'string') return;
+      return title.substr(0, 10);
+    },
   },
 };
 </script>
