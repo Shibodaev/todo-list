@@ -12,16 +12,16 @@
             {{ shortTitle(valute.valute.Timestamp) }}
           </h2>
         </div>
-        <div>
+        <form>
           <div class="grid grid-cols-2 max-w-sm mt-5 gap-3">
-            <select-code
-              v-for="item in 2"
-              :key="item"
-              :elements="valute.valute.Valute"
-              @change="selectValue($event)"
-            ></select-code>
+            <!-- @change="$emit('selectValue', $event)"-->
+            <select class="border p-2 rounded-md w-full" data-te-select-init>
+              <option v-for="el in valute.valute.Valute" :key="el.ID">
+                {{ el.CharCode }}
+              </option>
+            </select>
           </div>
-          <!-- <div class="flex flex-col mt-4">
+          <div class="flex flex-col mt-4">
             <div class="mb-1">{{ defaultString }}</div>
             <input
               @keydown="
@@ -48,8 +48,8 @@
               min="1"
               v-model="currentValute"
             />
-          </div> -->
-        </div>
+          </div>
+        </form>
       </div>
       <pre>
         <!-- {{ valute.valute.Valute }} -->
@@ -71,7 +71,7 @@
 <script>
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
-import SelectCode from '@/components/select/SelectCode';
+// import SelectCode from '@/components/select/SelectCode';
 import ConverterCard from '@/components/ConverterCard/ConverterCard';
 export default {
   data() {
@@ -83,7 +83,7 @@ export default {
     };
   },
   components: {
-    SelectCode,
+    // SelectCode,
     ConverterCard,
   },
   created() {
@@ -103,9 +103,7 @@ export default {
     // },
   },
   methods: {
-    selectValue(e) {
-      console.log(e.target);
-    },
+    selectValue() {},
     shortTitle(title) {
       if (typeof title != 'string') return;
       return title.substr(0, 10);
