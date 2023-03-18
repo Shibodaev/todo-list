@@ -15,8 +15,17 @@
         <form>
           <div class="grid grid-cols-2 max-w-sm mt-5 gap-3">
             <!-- @change="$emit('selectValue', $event)"-->
-            <select class="border p-2 rounded-md w-full" data-te-select-init>
-              <option v-for="el in valute.valute.Valute" :key="el.ID">
+            <select
+              class="border p-2 rounded-md w-full"
+              v-for="sel in 2"
+              :key="sel"
+              @change="selectValue($event)"
+            >
+              <option
+                v-for="el in valute.valute.Valute"
+                :key="el.ID"
+                :value="el"
+              >
                 {{ el.CharCode }}
               </option>
             </select>
@@ -32,7 +41,6 @@
               class="border rounded-sm h-10 p-2"
               type="number"
               min="1"
-              v-model="defaultValue"
             />
           </div>
           <div class="flex flex-col mt-4">
@@ -103,7 +111,9 @@ export default {
     // },
   },
   methods: {
-    selectValue() {},
+    selectValue() {
+      console.log(this.defaultValue);
+    },
     shortTitle(title) {
       if (typeof title != 'string') return;
       return title.substr(0, 10);
