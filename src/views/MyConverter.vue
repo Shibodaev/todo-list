@@ -14,48 +14,38 @@
         </div>
         <form>
           <div class="grid grid-cols-2 max-w-sm mt-5 gap-3">
-            <!-- @change="$emit('selectValue', $event)"-->
-            <select
-              class="border p-2 rounded-md w-full"
-              v-for="sel in 2"
-              :key="sel"
-              @change="selectValue($event)"
-            >
-              <option
-                v-for="el in valute.valute.Valute"
-                :key="el.ID"
-                :value="el"
+            <div class="flex flex-col">
+              {{ defaultValute }}
+              <select
+                class="border p-2 rounded-md w-full"
+                data-te-select-init
+                v-model="defaultValute"
+                @change="selectValue($event)"
               >
-                {{ el.CharCode }}
-              </option>
-            </select>
+                <option
+                  selected="el"
+                  v-for="el in valute.valute.Valute"
+                  :key="el"
+                  :value="el"
+                >
+                  {{ el.CharCode }}
+                </option>
+              </select>
+              <!-- @keydown="
+                  if (['+', '-', 'e'].includes($event.key))
+                    $event.preventDefault();
+                " -->
+              <input
+                pattern="^[ 0-9]+$"
+                class="border mt-2 rounded-sm h-10 p-2"
+                type="number"
+                min="1"
+                :value="defaultValute.Nominal"
+              />
+            </div>
           </div>
           <div class="flex flex-col mt-4">
-            <div class="mb-1">{{ defaultString }}</div>
-            <input
-              @keydown="
-                if (['+', '-', 'e'].includes($event.key))
-                  $event.preventDefault();
-              "
-              pattern="^[ 0-9]+$"
-              class="border rounded-sm h-10 p-2"
-              type="number"
-              min="1"
-            />
-          </div>
-          <div class="flex flex-col mt-4">
-            <div class="mb-1">{{ defaultString }}</div>
-            <input
-              @keydown="
-                if (['+', '-', 'e'].includes($event.key))
-                  $event.preventDefault();
-              "
-              pattern="^[ 0-9]+$"
-              class="border rounded-sm h-10 p-2"
-              type="number"
-              min="1"
-              v-model="currentValute"
-            />
+            <!-- <div class="mb-1">{{ currentValute.Name }}</div> -->
           </div>
         </form>
       </div>
@@ -81,11 +71,18 @@ import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
 // import SelectCode from '@/components/select/SelectCode';
 import ConverterCard from '@/components/ConverterCard/ConverterCard';
+
 export default {
+  model: {
+    prop: '',
+  },
   data() {
     return {
-      defaultValue: 1,
-      defaultString: 'Rub - Российский рубль',
+      defaultValute: {
+        CharCode: 'RUB',
+        Nominal: 1,
+        Name: 'Российский рубль',
+      },
       flags: '',
       searchValue: '',
     };
@@ -111,8 +108,9 @@ export default {
     // },
   },
   methods: {
-    selectValue() {
-      console.log(this.defaultValue);
+    selectValue(e, val) {
+      console.log(e);
+      console.log(val);
     },
     shortTitle(title) {
       if (typeof title != 'string') return;

@@ -4,9 +4,9 @@ module.exports = {
     './public/**/*.html',
     './src/**/*.{html,js}',
     './src/**/*.{vue,js,ts,jsx,tsx}',
-    './node_modules/tw-elements/dist/js/**/*.js',
+    '@tw-elements/dist/js/**/*.js',
   ],
-  plugins: [require('tw-elements/dist/plugin')],
+  plugins: [],
   presets: [],
   darkMode: 'media', // or 'class'
   theme: {
@@ -1007,5 +1007,4 @@ module.exports = {
     'active',
     'disabled',
   ],
-  plugins: [],
 };

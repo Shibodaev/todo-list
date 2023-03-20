@@ -3,7 +3,6 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import axios from 'axios';
-import Vuex from 'vuex';
 import VueAxios from 'vue-axios';
 
 // Style
@@ -36,6 +35,5 @@ createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
   .use(store)
   .use(router)
-  .use(Vuex)
   .use(VueAxios, axios)
   .mount('#app');
