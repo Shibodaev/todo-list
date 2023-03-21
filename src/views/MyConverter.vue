@@ -1,6 +1,6 @@
 <template>
-  <div class="overflow-hidden">
-    <div class="flex w-full">
+  <div>
+    <div class="flex w-full flex-col">
       <div>
         <div class="flex-inline flex-col">
           <h2 class="text-xl font-bold">
@@ -12,56 +12,76 @@
             {{ shortTitle(valute.valute.Timestamp) }}
           </h2>
         </div>
-        <form>
-          <div class="grid grid-cols-2 max-w-sm mt-5 gap-3">
-            <div class="flex flex-col">
-              {{ defaultValute }}
-              <select
-                class="border p-2 rounded-md w-full"
-                data-te-select-init
-                v-model="defaultValute"
-                @change="selectValue($event)"
-              >
-                <option
-                  selected="el"
-                  v-for="el in valute.valute.Valute"
-                  :key="el"
-                  :value="el"
-                >
-                  {{ el.CharCode }}
-                </option>
-              </select>
-              <!-- @keydown="
-                  if (['+', '-', 'e'].includes($event.key))
-                    $event.preventDefault();
-                " -->
-              <input
-                pattern="^[ 0-9]+$"
-                class="border mt-2 rounded-sm h-10 p-2"
-                type="number"
-                min="1"
-                :value="defaultValute.Nominal"
-              />
-            </div>
-          </div>
-          <div class="flex flex-col mt-4">
-            <!-- <div class="mb-1">{{ currentValute.Name }}</div> -->
-          </div>
-        </form>
       </div>
-      <pre>
-        <!-- {{ valute.valute.Valute }} -->
-      </pre>
+      <div class="inline-grid grid-cols-2 mt-4">
+        <div class="b-tabs mr-auto">
+          <div class="b-tabs__head relative border flex">
+            <ul class="inline-grid grid-cols-5 items-center justify-center">
+              <template v-for="(item, index, i) in valute.valute.Valute">
+                <li
+                  :id="item.ID"
+                  :key="item.ID"
+                  v-if="i < 4"
+                  class="flex-inline py-2 px-4 border-r"
+                  @:click="openTab(valute.valute.Valute, item.CharCode)"
+                >
+                  {{ item.CharCode }}
+                </li>
+                <li
+                  class="flex items-center justify-center"
+                  v-else-if="i === 4"
+                  :key="item.ID"
+                  @click="view = !view"
+                >
+                  <font-awesome-icon icon="fa-solid fa-chevron-down" />
+                </li>
+                <li
+                  v-else-if="i === 5"
+                  class="absolute left-0 top-10 grid border bg-white h-60 w-full p-4 grid-cols-5"
+                  :key="item.ID"
+                  v-show="view"
+                >
+                  <div
+                    href="/"
+                    class="text-xs cursor-pointer"
+                    v-for="el in valute.valute.Valute"
+                    :key="el"
+                    :id="el.ID"
+                    v-on:click="openTab(valute.valute.Valute, el.CharCode)"
+                  >
+                    {{ el.CharCode }}
+                  </div>
+                </li>
+              </template>
+            </ul>
+          </div>
+          <div class="b-tabs__content">
+            <h2 class="mb-4 font-medium text-xl mt-4">Ваши средства</h2>
+
+            <input
+              class="border p-2 w-full h-24 mt-6 text-2xl font-bold"
+              v-model="defaultValute.Nominal"
+            />
+            <span class="mt-4 block">
+              {{ defaultValute.Nominal * defaultValute.Value }} =
+              {{ defaultValute.Name }}
+            </span>
+          </div>
+        </div>
+      </div>
       <div
         class="flex-col max-w-xs flex overflow-auto pb-6 aic ml-auto mr-10 max-h-96"
       >
-        <converter-card
+        <!-- <converter-card
           v-for="(item, index, i) in valute.valute.Valute"
           :key="item.ID"
           :class="i >= 1 ? 'mt-2' : ''"
           :item="item"
-        ></converter-card>
+        ></converter-card> -->
       </div>
+      <!-- <pre>
+        {{ d }}
+      </pre> -->
     </div>
   </div>
 </template>
@@ -70,7 +90,7 @@
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
 // import SelectCode from '@/components/select/SelectCode';
-import ConverterCard from '@/components/ConverterCard/ConverterCard';
+// import ConverterCard from '@/components/ConverterCard/ConverterCard';
 
 export default {
   model: {
@@ -78,18 +98,17 @@ export default {
   },
   data() {
     return {
-      defaultValute: {
-        CharCode: 'RUB',
-        Nominal: 1,
-        Name: 'Российский рубль',
-      },
+      view: false,
+      defaultNominal: 1,
+      content: {},
+      defaultValute: this.$store.state.valute.valute.Valute['USD'],
       flags: '',
       searchValue: '',
     };
   },
   components: {
     // SelectCode,
-    ConverterCard,
+    // ConverterCard,
   },
   created() {
     this.$store.dispatch('getAllValute');
@@ -111,6 +130,22 @@ export default {
     selectValue(e, val) {
       console.log(e);
       console.log(val);
+    },
+    openTab(object, key) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (object.hasOwnProperty(key)) {
+        this.defaultValute = object[key];
+        this.view = false;
+        return this.defaultValute;
+      }
+      for (let i = 0; i < Object.keys(object).length; i++) {
+        if (typeof object[Object.keys(object)[i]] === 'object') {
+          let o = this.openTab(object[Object.keys(object)[i]], key);
+          if (o != null) return (this.defaultValute = o);
+        }
+      }
+
+      return null;
     },
     shortTitle(title) {
       if (typeof title != 'string') return;

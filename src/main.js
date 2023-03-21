@@ -20,10 +20,12 @@ import {
   faSliders,
   faArrowUp,
   faArrowDown,
+  faChevronDown,
 } from '@fortawesome/free-solid-svg-icons';
 library.add(
   faArrowUp,
   faArrowDown,
+  faChevronDown,
   faSliders,
   faXmark,
   faPlus,
