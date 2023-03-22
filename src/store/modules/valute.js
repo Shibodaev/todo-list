@@ -9,7 +9,7 @@ export default {
       axios
         .get('http://www.cbr-xml-daily.ru/daily_json.js', {
           headers: {
-            'Content-Type': 'application/data',
+            'Content-Type': 'application/json',
           },
         })
         .then((response) => response.data)
@@ -17,7 +17,7 @@ export default {
           commit('Set_state', items);
         })
         .catch((error) => {
-          error.response.data;
+          console.log(error);
         });
     },
   },

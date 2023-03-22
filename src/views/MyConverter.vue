@@ -14,6 +14,9 @@
         </div>
       </div>
       <div class="inline-grid grid-cols-2 mt-4">
+        <!-- <pre>
+           {{ defaultValute }}
+        </pre> -->
         <div class="b-tabs mr-auto">
           <div class="b-tabs__head relative border flex">
             <ul class="inline-grid grid-cols-5 items-center justify-center">
@@ -59,8 +62,8 @@
             <h2 class="mb-4 font-medium text-xl mt-4">Ваши средства</h2>
 
             <input
-              class="border p-2 w-full h-24 mt-6 text-2xl font-bold"
               v-model="defaultValute.Nominal"
+              class="border p-2 w-full h-24 mt-6 text-2xl font-bold"
             />
             <span class="mt-4 block">
               {{ defaultValute.Nominal * defaultValute.Value }} =
@@ -93,18 +96,30 @@ import { mapGetters } from 'vuex';
 // import ConverterCard from '@/components/ConverterCard/ConverterCard';
 
 export default {
-  model: {
-    prop: '',
-  },
+  // setup(props, ctx) {},
   data() {
     return {
       view: false,
       defaultNominal: 1,
       content: {},
-      defaultValute: this.$store.state.valute.valute.Valute['USD'],
+      defaultValute: this.$store.state.valute.valute['Valute']['USD'],
       flags: '',
       searchValue: '',
     };
+  },
+  props: {
+    // defaultValute: {
+    //   type: Object,
+    //   default: () => ({
+    //     Name: String,
+    //     ID: String,
+    //     NumCode: String,
+    //     CharCode: String,
+    //     Nominal: Number,
+    //     Value: Number,
+    //     Previous: Number,
+    //   }),
+    // },
   },
   components: {
     // SelectCode,
@@ -138,12 +153,12 @@ export default {
         this.view = false;
         return this.defaultValute;
       }
-      for (let i = 0; i < Object.keys(object).length; i++) {
-        if (typeof object[Object.keys(object)[i]] === 'object') {
-          let o = this.openTab(object[Object.keys(object)[i]], key);
-          if (o != null) return (this.defaultValute = o);
-        }
-      }
+      // for (let i = 0; i < Object.keys(object).length; i++) {
+      //   if (typeof object[Object.keys(object)[i]] === 'object') {
+      //     let o = this.openTab(object[Object.keys(object)[i]], key);
+      //     if (o != null) return (this.defaultValute = o);
+      //   }
+      // }
 
       return null;
     },
