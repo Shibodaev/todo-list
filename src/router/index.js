@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
+import store from '../store/modules/valute';
+import axios from 'axios';
 
 const routes = [
   {
@@ -37,5 +39,29 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+router.beforeEach((to, from, next) => {
+  if (typeof store.state['valute'] === 'object') {
+    axios
+      .get('http://www.cbr-xml-daily.ru/daily_json.js', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        {
+          store.state.valute = response.data.Valute;
+          // console.log(store);
+        }
+      })
+      .catch((error) => {
+        new Error(error);
+      });
+
+    // axios.get(store.state.url .then((response) => {
+    //   store.dispatch('getAllValute', response.data);
+    next();
+    // });
+  }
 });
 export default router;
