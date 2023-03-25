@@ -1,11 +1,11 @@
 <template>
-  <template v-for="(item, index, i) in defaultValuteData">
+  <template v-for="(item, index, i) in dataValuta">
     <li
       :id="item.ID"
       :key="item.ID"
       v-if="i < 4"
       class="flex-inline py-2 px-4 border-r"
-      @:click="openTab(defaultValuteData, item.CharCode)"
+      v-on:click="openTab(dataValuta, item.CharCode)"
     >
       {{ item.CharCode }}
     </li>
@@ -26,10 +26,10 @@
       <div
         href="/"
         class="text-xs cursor-pointer"
-        v-for="el in defaultValuteData"
+        v-for="el in dataValuta"
         :key="el"
-        :id="el.ID"
-        v-on:click="openTab(defaultValuteData, el.CharCode)"
+        :id="item.ID"
+        @:click="openTab(dataValuta, el.CharCode)"
       >
         {{ el.CharCode }}
       </div>
@@ -39,10 +39,31 @@
 
 <script>
 export default {
-  setup() {
-    return {};
+  data() {
+    return {
+      defaultValute: null,
+      view: false,
+    };
   },
-  inject: ['defaultValuteData'],
+  props: {
+    dataValuta: {
+      type: Object,
+      required: true,
+      default: () => ({}),
+    },
+  },
+  methods: {
+    openTab(object, key) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (object.hasOwnProperty(key)) {
+        this.defaultValute = object[key];
+        this.view = false;
+        return this.defaultValute;
+      }
+
+      return null;
+    },
+  },
 };
 </script>
 

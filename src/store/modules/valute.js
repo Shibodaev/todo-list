@@ -3,6 +3,7 @@ import axios from 'axios';
 export default {
   state: {
     valute: [],
+    computedValue: null,
   },
   actions: {
     getAllValute({ commit }) {

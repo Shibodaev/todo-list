@@ -17,7 +17,9 @@
         <!-- <pre>
            {{ defaultValute }}
         </pre> -->
-        <converter-card-tabs> </converter-card-tabs>
+
+        <converter-card-tabs :valutaToConverter="valute.valute.Valute">
+        </converter-card-tabs>
       </div>
       <div
         class="flex-col max-w-xs flex overflow-auto pb-6 aic ml-auto mr-10 max-h-96"
@@ -40,34 +42,24 @@
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
 import ConverterCardTabs from '@/components/ConverterCard/ConverterCardTabs';
+
 // import { provide } from 'vue';
 // import SelectCode from '@/components/select/SelectCode';
 // import ConverterCard from '@/components/ConverterCard/ConverterCard';
 
 export default {
-  // setup(props, ctx) {},
-  setup() {
+  components: {
+    ConverterCardTabs,
+  },
+  data() {
     return {
-      view: false,
       defaultNominal: 1,
       content: {},
-      defaultValute: null,
-      // this.$store.state.valute.valute
       flags: '',
       searchValue: '',
     };
   },
-  provide() {
-    return {
-      defaultValuteData: this.defaultValute,
-    };
-  },
-  components: {
-    ConverterCardTabs,
-    // SelectCode,
-    // ConverterCard,
-  },
-  mounted() {
+  created() {
     this.$store.dispatch('getAllValute');
   },
   computed: {
@@ -84,26 +76,6 @@ export default {
     // },
   },
   methods: {
-    selectValue(e, val) {
-      console.log(e);
-      console.log(val);
-    },
-    openTab(object, key) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (object.hasOwnProperty(key)) {
-        this.defaultValute = object[key];
-        this.view = false;
-        return this.defaultValute;
-      }
-      // for (let i = 0; i < Object.keys(object).length; i++) {
-      //   if (typeof object[Object.keys(object)[i]] === 'object') {
-      //     let o = this.openTab(object[Object.keys(object)[i]], key);
-      //     if (o != null) return (this.defaultValute = o);
-      //   }
-      // }
-
-      return null;
-    },
     shortTitle(title) {
       if (typeof title != 'string') return;
       return title.substr(0, 10);
