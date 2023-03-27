@@ -3,7 +3,10 @@
     <div class="b-tabs__head relative border flex">
       <ul class="inline-grid grid-cols-5 items-center justify-center">
         <converter-card-tabs-item
+          v-for="(item, index) in dataValuta"
+          :key="item.ID"
           :dataValuta="valutaToConverter"
+          @click-tab="openTab(defaultValute, index)"
         ></converter-card-tabs-item>
       </ul>
     </div>
@@ -24,7 +27,6 @@ export default {
       defaultValute: null,
     };
   },
-  watch: {},
   components: {
     ConverterCardTabsItem,
     ConverterCardTabsItemConclusion,
@@ -35,6 +37,16 @@ export default {
       required: true,
       default: () => ({}),
     },
+  },
+  openTab(object, key) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (object.hasOwnProperty(key)) {
+      this.defaultValute = object[key];
+      this.view = false;
+      return this.defaultValute;
+    }
+
+    return null;
   },
 };
 </script>
