@@ -1,19 +1,34 @@
 <template>
   <div>
-    <input class="border p-2 w-full h-24 mt-6 text-2xl font-bold" />
-    <!-- v-model="defaultValute.Nominal" -->
-    <!-- <span class="mt-4 block">
-      {{ defaultValute.Nominal * defaultValute.Value }} =
-      {{ defaultValute.Name }}
-    </span> -->
+    <input
+      :value="modelValue"
+      @input="$emit('update:modelValue'), $event.target.value"
+      type="number"
+      class="border p-2 w-full h-24 mt-6 text-2xl font-bold"
+    />
+    <span class="mt-4 block">
+      {{ value }} =
+      {{ name }}
+    </span>
   </div>
 </template>
 
 <script>
-// import store from '@/store/modules/valute.js';
 export default {
-  setup() {
-    return {};
+  setup() {},
+  emits: ['update:modelValue'],
+  props: {
+    modelValue: {
+      type: Number,
+      default: 0,
+    },
+    tabsResult: {
+      type: Object,
+      default: () => ({}),
+    },
+    value: Number,
+    nominal: Number,
+    name: String,
   },
 };
 </script>
