@@ -1,34 +1,42 @@
 <template>
-  <div>
+  <div class="border p-4 max-w-xl w-full">
+    <div>
+      {{ tabsResult.Name }}
+    </div>
     <input
-      :value="modelValue"
-      @input="$emit('update:modelValue'), $event.target.value"
-      type="number"
-      class="border p-2 w-full h-24 mt-6 text-2xl font-bold"
+      :value="changeValue"
+      type="text"
+      class="my-2 text-2xl font-bold focus:border-none focus:outline-none"
     />
-    <span class="mt-4 block">
-      {{ value }} =
-      {{ name }}
+
+    <div>{{ inputValue * tabsResult.Value }} - Российских рублей</div>
+    <span class="mt-4 block text-xs text-gray-400">
+      {{ tabsResult.Nominal }} - {{ tabsResult.Name }} =
+      {{ tabsResult.Value }} Российских рублей
     </span>
   </div>
 </template>
 
 <script>
 export default {
-  setup() {},
-  emits: ['update:modelValue'],
-  props: {
-    modelValue: {
-      type: Number,
-      default: 0,
+  watch: {
+    getTabResult: {
+      handler() {
+        this.inputValue = this.tabsResult.Nominal;
+      },
+      immediate: true,
     },
+  },
+  data() {
+    return {
+      inputValue: this.tabsResult.Nominal,
+    };
+  },
+  props: {
     tabsResult: {
       type: Object,
-      default: () => ({}),
+      // default: () => ({}),
     },
-    value: Number,
-    nominal: Number,
-    name: String,
   },
 };
 </script>

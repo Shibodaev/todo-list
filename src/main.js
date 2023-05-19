@@ -21,6 +21,7 @@ import {
   faArrowUp,
   faArrowDown,
   faChevronDown,
+  faRightLeft,
 } from '@fortawesome/free-solid-svg-icons';
 library.add(
   faArrowUp,
@@ -30,7 +31,8 @@ library.add(
   faXmark,
   faPlus,
   faPen,
-  faPenToSquare
+  faPenToSquare,
+  faRightLeft
 );
 
 createApp(App)

@@ -2,7 +2,7 @@
   <div>
     <div class="flex w-full flex-col">
       <div>
-        <div class="flex-inline flex-col">
+        <div class="flex-inline flex-col col">
           <h2 class="text-xl font-bold">
             Курсы валют ЦБ РФ на:
             {{ shortTitle(valute.valute.Date) }}
@@ -13,13 +13,32 @@
           </h2>
         </div>
       </div>
-      <div class="inline-grid grid-cols-2 mt-4">
-        <!-- <pre>
-           {{ defaultValute }}
-        </pre> -->
-
-        <converter-card-tabs :valutaToConverter="valute.valute.Valute">
-        </converter-card-tabs>
+      <div class="flex max-w-3xl gap-5 mt-5">
+        <div class="max-w w-full max-w-xs">
+          <h2 class="mb-3">У меня есть</h2>
+          <converter-card-tabs
+            :rub="true"
+            :valutaToConverter="valute.valute.Valute"
+            :max="3"
+          >
+          </converter-card-tabs>
+        </div>
+        <div class="relative">
+          <font-awesome-icon
+            style="transform: translateY(-50%)"
+            class="relative top-2/4 cursor-pointer w-10 h-10"
+            :icon="['fas', 'right-left']"
+          />
+        </div>
+        <div class="w-full max-w-xs">
+          <h2 class="mb-3">Хочу приобрести</h2>
+          <converter-card-tabs
+            :rub="false"
+            :valutaToConverter="valute.valute.Valute"
+            :max="3"
+          >
+          </converter-card-tabs>
+        </div>
       </div>
       <div
         class="flex-col max-w-xs flex overflow-auto pb-6 aic ml-auto mr-10 max-h-96"
@@ -59,7 +78,7 @@ export default {
       searchValue: '',
     };
   },
-  created() {
+  mounted() {
     this.$store.dispatch('getAllValute');
   },
   computed: {

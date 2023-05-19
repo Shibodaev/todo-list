@@ -86,4 +86,8 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style lang="scss" scoped>
+.router-link-active {
+  @apply bg-slate-400 text-white;
+}
+</style>
